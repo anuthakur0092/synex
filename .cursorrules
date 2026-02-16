@@ -1,0 +1,234 @@
+# Cursor Rules for React Native Project
+
+You are an expert React Native developer working with a TypeScript-based mobile application. Follow these rules and conventions strictly.
+
+## Project Context
+- Framework: React Native with TypeScript
+- State Management: Redux Toolkit
+- Navigation: React Navigation
+- Styling: StyleSheet API with separated .styles.ts files
+- Testing: Jest and React Native Testing Library
+- Platforms: iOS and Android
+
+## File Structure Rules
+
+### Component Files
+- Place reusable UI components in `src/components/common/`
+- Place feature-specific components in `src/components/features/[feature-name]/`
+- Each component should have its own folder with:
+  - `ComponentName.tsx` (main component)
+  - `ComponentName.styles.ts` (styles)
+  - `ComponentName.test.tsx` (tests)
+  - `index.ts` (exports)
+
+### Screen Files
+- Place screen components in `src/screens/[feature]/`
+- Screens are connected to navigation and orchestrate components
+- Screen names should end with "Screen" (e.g., `LoginScreen.tsx`)
+
+### Service Files
+- API services go in `src/services/api/`
+- Storage utilities go in `src/services/storage/`
+- Each API service should be domain-specific (e.g., `auth.ts`, `users.ts`)
+
+## Coding Standards
+
+### TypeScript Requirements
+- Always use TypeScript, no plain JavaScript files
+- Define interfaces for all component props
+- Define types for API responses in `src/utils/types/`
+- Use type inference where obvious, explicit types where not
+- Prefer interfaces over type aliases for object shapes
+
+### Component Structure
+```typescript
+import React from 'react';
+import { View, Text } from 'react-native';
+import { styles } from './ComponentName.styles';
+
+interface ComponentNameProps {
+  // Define all props with types
+  title: string;
+  onPress?: () => void;
+}
+
+export const ComponentName: React.FC<ComponentNameProps> = ({ 
+  title,
+  onPress 
+}) => {
+  // Component logic here
+  return (
+    <View style={styles.container}>
+      <Text>{title}</Text>
+    </View>
+  );
+};
+```
+
+### Style Files
+```typescript
+import { StyleSheet } from 'react-native';
+import { colors, dimensions } from '@/utils/constants';
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    padding: dimensions.padding.medium,
+  },
+  // Other styles
+});
+```
+
+### Import Order
+Maintain this import order:
+1. React and React Native
+2. Third-party libraries
+3. Navigation imports
+4. Redux/store imports
+5. Services
+6. Components
+7. Hooks
+8. Utils and types
+9. Assets
+10. Styles
+
+## Redux Patterns
+
+### Slice Creation
+```typescript
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+
+interface SliceState {
+  // Define state shape
+}
+
+const initialState: SliceState = {
+  // Initial values
+};
+
+export const sliceName = createSlice({
+  name: 'sliceName',
+  initialState,
+  reducers: {
+    // Reducer functions
+  },
+});
+
+export const { actions } = sliceName;
+export default sliceName.reducer;
+```
+
+### Using Redux in Components
+- Use typed hooks from `src/store/hooks.ts`
+- Never use plain `useSelector` or `useDispatch`
+- Keep Redux logic in slices, not components
+
+## API Integration
+
+### Service Pattern
+```typescript
+import { apiClient } from './client';
+import { ResponseType } from '@/utils/types/api.types';
+
+export const serviceApi = {
+  getItems: () => 
+    apiClient.get<ResponseType>('/endpoint'),
+    
+  createItem: (data: CreateDTO) => 
+    apiClient.post<ResponseType>('/endpoint', data),
+};
+```
+
+### Error Handling
+- Always handle API errors gracefully
+- Show user-friendly error messages
+- Log errors for debugging
+- Use try-catch blocks in async functions
+
+## Navigation Types
+
+### Define Navigation Props
+```typescript
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+
+type Props = NativeStackScreenProps<RootStackParamList, 'ScreenName'>;
+
+export const ScreenName: React.FC<Props> = ({ navigation, route }) => {
+  // Screen implementation
+};
+```
+
+## Best Practices
+
+### Performance
+- Use React.memo for expensive components
+- Implement useMemo and useCallback where beneficial
+- Use FlatList for long lists with proper optimization props
+- Lazy load heavy components
+
+### Accessibility
+- Add accessibility labels to interactive elements
+- Ensure proper color contrast
+- Support screen readers
+- Test with accessibility tools
+
+### Testing
+- Write tests for all new components
+- Test user interactions, not implementation details
+- Mock external dependencies
+- Aim for meaningful coverage, not 100%
+
+## Code Generation Rules
+
+When generating code:
+1. Always follow the existing project structure
+2. Include TypeScript types for everything
+3. Create complete components with props interfaces
+4. Add appropriate error handling
+5. Include basic styles in separate files
+6. Use existing utilities and constants
+7. Follow naming conventions strictly
+8. Add comments only where necessary for clarity
+
+## Common Patterns to Use
+
+### Custom Hooks
+- Place in `src/hooks/`
+- Start with "use" prefix
+- Return typed values
+- Handle loading and error states
+
+### Form Handling
+- Use controlled components
+- Validate on blur and submit
+- Show inline error messages
+- Disable submit during loading
+
+### List Rendering
+- Use FlatList over map for performance
+- Implement proper key extractors
+- Add empty states
+- Include pull-to-refresh where appropriate
+
+## What NOT to Do
+
+- Don't use any or unknown types
+- Don't put business logic in components
+- Don't use inline styles
+- Don't ignore error cases
+- Don't create giant components
+- Don't use console.log in production code
+- Don't hardcode strings - use i18n
+- Don't commit sensitive data
+
+## File Creation Examples
+
+When asked to create a new feature:
+1. Create the screen in `src/screens/[feature]/`
+2. Create feature components in `src/components/features/[feature]/`
+3. Add navigation types
+4. Create necessary API services
+5. Add Redux slice if state management needed
+6. Create tests for critical paths
+
+Remember: Maintain consistency with existing code patterns and always prioritize type safety, performance, and user experience.

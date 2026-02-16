@@ -1,0 +1,17 @@
+This placeholder file documents the expected SVG files for the Settings screen.
+Provide the following SVG files in this folder:
+- dark-mode.svg
+- account.svg
+- preferences.svg
+- security.svg
+- help-center.svg
+- support.svg
+- about.svg
+- twitter.svg
+- telegram.svg
+- facebook.svg
+- youtube.svg
+- logout.svg
+
+Currently, the screen imports these paths. Replace with actual icons when ready.
+

@@ -1,0 +1,68 @@
+{
+  "app": {
+    "name": "Yoex",
+    "version": "1.0.0",
+    "description": "Modern cryptocurrency wallet application"
+  },
+  "theme": {
+    "mode": "dark",
+    "allowUserToggle": true,
+    "followSystemTheme": false
+  },
+  "splash": {
+    "duration": 3000,
+    "minDuration": 2000,
+    "showLoadingIndicator": true
+  },
+  "features": {
+    "biometricAuth": true,
+    "notifications": true,
+    "analytics": false
+  },
+  "seedVerification": {
+    "enabled": true,
+    "development": {
+      "wordsPerStep": 1,
+      "totalSteps": 2,
+      "skipConfirmation": false
+    },
+    "production": {
+      "wordsPerStep": 3,
+      "totalSteps": 4,
+      "skipConfirmation": false
+    },
+    "testing": {
+      "wordsPerStep": 1,
+      "totalSteps": 1,
+      "skipConfirmation": true
+    }
+  },
+  "network": {
+    "name": "BNB Smart Chain",
+    "chainId": 56,
+    "symbol": "BNB",
+    "isTestnet": false,
+    "rpcHttpUrl": "https://bnb-mainnet.g.alchemy.com/v2/YmzF__0gR-fXYRjjsuzIY",
+    "rpcWsUrl": "wss://bnb-mainnet.g.alchemy.com/v2/YmzF__0gR-fXYRjjsuzIY"
+  },
+  "coingecko": {
+    "baseUrl": "https://pro-api.coingecko.com/api/v3",
+    "apiKey": ["CG-FBRV3g5f7Be9VYQ98iBgkFM7"],
+    "vsCurrency": "usd",
+    "refreshIntervalMs": 300000
+  },
+  "pricing": { "provider": "coingecko" },
+  "coinmarketcap": {
+    "baseUrl": "https://pro-api.coinmarketcap.com",
+    "apiKey": ["cd80684c-dff0-4d59-8a47-2d9f62e869a2"],
+    "vsCurrency": "USD"
+  },
+  "walletConnect": {
+    "projectId": "2d57f309e99823ad7959e2a056891a85",
+    "relayUrl": "wss://relay.walletconnect.com"
+  },
+  "covalent": {
+    "baseUrl": "https://api.covalenthq.com/v1",
+    "apiKey": "cqt_wF8hKtDpcpYJjtrkwBXtRvtDbVQ8"
+  }
+}

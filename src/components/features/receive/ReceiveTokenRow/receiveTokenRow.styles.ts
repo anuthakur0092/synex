@@ -1,0 +1,45 @@
+import { StyleSheet } from 'react-native';
+
+export const styles = StyleSheet.create({
+  row: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    paddingHorizontal: 16,
+    paddingVertical: 12,
+    borderBottomWidth: 1,
+  },
+  left: { flexDirection: 'row', alignItems: 'center', flex: 1 },
+  logo: { width: 36, height: 36, borderRadius: 18 },
+  logoPlaceholder: { width: 36, height: 36, borderRadius: 18 },
+  chainBadge: {
+    position: 'absolute',
+    right: -2,
+    bottom: -2,
+    width: 16,
+    height: 16,
+    borderRadius: 8,
+    borderWidth: 1,
+    borderColor: 'rgba(0,0,0,0.4)',
+  },
+  texts: { marginLeft: 12, flex: 1 },
+  nameLine: { flexDirection: 'row', alignItems: 'center' },
+  name: { fontSize: 14, fontWeight: '600' },
+  chainChip: {
+    borderWidth: 1,
+    borderRadius: 8,
+    paddingHorizontal: 6,
+    paddingVertical: 2,
+    marginLeft: 8,
+  },
+  chainChipText: { fontSize: 10, fontWeight: '600' },
+  address: { fontSize: 12, marginTop: 2 },
+  actions: { flexDirection: 'row', alignItems: 'center', gap: 12 },
+  iconButton: {
+    borderWidth: 1,
+    borderRadius: 16,
+    width: 32,
+    height: 32,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
+});

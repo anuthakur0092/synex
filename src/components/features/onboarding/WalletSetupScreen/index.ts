@@ -1,0 +1,1 @@
+export { WalletSetupScreen } from './WalletSetupScreen';
