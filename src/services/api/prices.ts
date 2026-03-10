@@ -15,11 +15,13 @@ const fetchJson = async (url: string, apiKey?: string) => {
   const headers: Record<string, string> = {
     'Content-Type': 'application/json',
   };
-  if (apiKey && !/REPLACE_ME/i.test(apiKey)) {
-    // Support both free and pro header names
-    headers['x-cg-pro-api-key'] = apiKey;
-  }
+  // if (apiKey && !/REPLACE_ME/i.test(apiKey)) {
+  //   console.log( ' at line 22 in src/services/api/prices.ts', { url, apiKey: apiKey ? '***' : 'none' });
+  //   // Support both free and pro header names
+  //   headers['x-cg-pro-api-key'] = apiKey;
+  // }
   const res = await fetch(url, { headers });
+  console.log( ' at line 23 in src/services/api/prices.ts', { url, status: res.status }); 
   if (!res.ok) {
     let body = '';
     try {
@@ -78,7 +80,7 @@ export const fetchEthPriceUsd = async (): Promise<PriceResult> => {
   }
 
   const { baseUrl, vsCurrency } = getCoinGeckoConfig();
-  const url = `${baseUrl}/simple/price?ids=ethereum&vs_currencies=${vsCurrency}`;
+  const url = `${baseUrl}/simple/price?ids=ethereum&vs_currencies=${vsCurrency}&x_cg_pro_api_key=${encodeURIComponent(getNextCoinGeckoApiKey() || '')}`;;
   const json = await fetchJson(url, getRandomCoinGeckoApiKey());
   // Debug log payload for troubleshooting (non-sensitive)
   try {
@@ -124,7 +126,7 @@ export const fetchEthMarketData = async (): Promise<MarketResult> => {
   }
 
   const { baseUrl, vsCurrency } = getCoinGeckoConfig();
-  const url = `${baseUrl}/coins/markets?vs_currency=${vsCurrency}&ids=ethereum&sparkline=false&price_change_percentage=24h`;
+  const url = `${baseUrl}/coins/markets?vs_currency=${vsCurrency}&ids=ethereum&sparkline=false&price_change_percentage=24h&x_cg_pro_api_key=${encodeURIComponent(getNextCoinGeckoApiKey() || '')}`;;
   const json = await fetchJson(url, getRandomCoinGeckoApiKey());
   const item = Array.isArray(json) ? json[0] : undefined;
   if (!item) throw new Error('Market data not available');
@@ -144,17 +146,17 @@ export const fetchEthMarketData = async (): Promise<MarketResult> => {
 // ===== Native coin market data by chain =====
 
 const cmcSymbolByChainId: Record<number, string> = {
-  1: 'ETH',
+  // 1: 'ETH',
   56: 'BNB',
   // Polygon native token rebrand MATIC -> POL. Try POL first, then MATIC.
-  137: 'POL',
+  // 137: 'POL',
 };
 
 const coingeckoIdByChainId: Record<number, string> = {
-  1: 'ethereum',
+  // 1: 'ethereum',
   56: 'binancecoin',
   // Prefer POL id when available, fallback to historical MATIC id
-  137: 'polygon-ecosystem-token',
+  // 137: 'polygon-ecosystem-token',
 };
 
 export const fetchNativeMarketData = async (
@@ -203,7 +205,7 @@ export const fetchNativeMarketData = async (
   })();
   for (const cgId of cgCandidates) {
     try {
-      const url = `${baseUrl}/coins/markets?vs_currency=${vsCurrency}&ids=${cgId}&sparkline=false&price_change_percentage=24h`;
+      const url = `${baseUrl}/coins/markets?vs_currency=${vsCurrency}&ids=${cgId}&sparkline=false&price_change_percentage=24h&x_cg_pro_api_key=${encodeURIComponent(getNextCoinGeckoApiKey() || '')}`;
       const json = await fetchJson(url, getRandomCoinGeckoApiKey());
       const item = Array.isArray(json) ? json[0] : undefined;
       if (!item) throw new Error('Market data not available');
@@ -338,7 +340,8 @@ export const fetchErc20MarketData = async (
               `${baseUrl}/simple/token_price/${platform}` +
               `?contract_addresses=${encodeURIComponent(checksumAddr)}` +
               `&vs_currencies=${encodeURIComponent(vsCurrency)}` +
-              `&include_24hr_change=true&precision=2`;
+              `&include_24hr_change=true&precision=2`+
+              `&x_cg_pro_api_key=CG-nz5dqGfQRxzGQxTx16R7PAgz`;;
             const key = getNextCoinGeckoApiKey();
             const j = await fetchJson(singleUrl, key);
             const entry = j?.[lower];
@@ -391,7 +394,8 @@ export const fetchErc20MarketData = async (
       `${baseUrl}/simple/token_price/${platform}` +
       `?contract_addresses=${encodeURIComponent(checksumAddr)}` +
       `&vs_currencies=${encodeURIComponent(vsCurrency)}` +
-      `&include_24hr_change=true&precision=2`;
+      `&include_24hr_change=true&precision=2`+
+      `&x_cg_pro_api_key=CG-nz5dqGfQRxzGQxTx16R7PAgz`;
     let havePrice = false;
     try {
       const key = getNextCoinGeckoApiKey();

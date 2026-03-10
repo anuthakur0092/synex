@@ -296,7 +296,7 @@ export const HomeScreen: React.FC<Props> = ({ route, navigation }) => {
         logoSource: logo,
         balance: { amount: amount ?? '0', symbol, decimals: 18 },
         value: {
-          amount: price != null ? price.toFixed(2) : '0',
+          amount: price != null ? price.toFixed(5) : '0',
           currency: 'USD',
           symbol: '$',
         },
@@ -414,12 +414,12 @@ export const HomeScreen: React.FC<Props> = ({ route, navigation }) => {
       } as any;
     } else {
       cloned.wallet.balance.primary = {
-        amount: totalUsd.toFixed(2),
+        amount: totalUsd.toFixed(5),
         symbol: '$',
         decimals: 2,
       } as any;
       cloned.wallet.balance.secondary = {
-        amount: Math.abs(totalChangeUsd).toFixed(2),
+        amount: Math.abs(totalChangeUsd).toFixed(5),
         currency: 'USD',
         symbol: '$',
       } as any;

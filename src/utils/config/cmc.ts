@@ -13,7 +13,7 @@ type AppCfg = typeof appConfig & {
 
 const DEFAULTS: CoinMarketCapConfig = {
   baseUrl: 'https://pro-api.coinmarketcap.com',
-  apiKey: 'cd80684c-dff0-4d59-8a47-2d9f62e869a2',
+  apiKey: '29869f5a-30fd-4ce5-82ae-28746b09d938',
   apiKeys: [],
   vsCurrency: 'USD',
 };

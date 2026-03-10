@@ -14,8 +14,8 @@ type AppCfg = typeof appConfig & {
 
 const DEFAULTS: CoinGeckoConfig = {
   baseUrl: 'https://pro-api.coingecko.com/api/v3',
-  apiKey: 'CG-FBRV3g5f7Be9VYQ98iBgkFM7',
-  apiKeys: ['CG-FBRV3g5f7Be9VYQ98iBgkFM7'],
+  apiKey: 'CG-nz5dqGfQRxzGQxTx16R7PAgz',
+  apiKeys: ['CG-nz5dqGfQRxzGQxTx16R7PAgz'],
   vsCurrency: 'usd',
   refreshIntervalMs: 300000,
 };
@@ -63,17 +63,21 @@ export const getNextCoinGeckoApiKey = (): string | undefined => {
   if (apiKeys && apiKeys.length > 0) {
     const key = apiKeys[cgApiKeyIndex % apiKeys.length];
     cgApiKeyIndex = (cgApiKeyIndex + 1) % apiKeys.length;
-    return key;
-  }
-  return apiKey;
+    // return key;
+  } 
+  return  'CG-nz5dqGfQRxzGQxTx16R7PAgz';
+  // return apiKey;
 };
 
 // Random key selection helper to spread requests across available keys
 export const getRandomCoinGeckoApiKey = (): string | undefined => {
   const { apiKeys, apiKey } = getCoinGeckoConfig();
+  console.log(  ' at line 74 in src/utils/config/coingecko.ts', { apiKeys, apiKey:  apiKey});
   if (apiKeys && apiKeys.length > 0) {
     const index = Math.floor(Math.random() * apiKeys.length);
-    return apiKeys[index];
+    // return apiKeys[index];
+     return  'CG-nz5dqGfQRxzGQxTx16R7PAgz';
   }
-  return apiKey;
+  // return apiKey;
+   return  'CG-nz5dqGfQRxzGQxTx16R7PAgz';
 };
